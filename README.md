@@ -14,7 +14,7 @@ The project is documented in form of a report and a brief demo video that show h
 
 ## Running The Program
 
-To run the program, it could be done by downloading all the necesary file in this repository and install all the required Libraries. Then it could be start by running the main program.
+To run the program, it could be done by downloading all the necesary file in this repository. Then it could be start by running the main program.
 
 If all the code run smoothly then it should show this on you terminal :
 
