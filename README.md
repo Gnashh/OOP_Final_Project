@@ -18,4 +18,4 @@ To run the program, it could be done by downloading all the necesary file in thi
 
 If all the code run smoothly then it should show this on you terminal :
 
-![Space N = 1000](default_run/main.png)
+![Space N = 1000](default_run.png)
