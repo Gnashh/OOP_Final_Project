@@ -1,6 +1,6 @@
 Made by: Marcellinus Ganesia Luviandanu_2702359572
 
-# Obejct Oriented Programing Final Project
+# Object Oriented Programing Final Project
 
 This is the final project repository for Object Oriented Programing class using Java Programming Languange. This project content is a restaurant simulation game that uses OOP concepts.
 
@@ -18,4 +18,4 @@ To run the program, it could be done by downloading all the necesary file in thi
 
 If all the code run smoothly then it should show this on you terminal :
 
-![Space N = 1000](images/main.png)
+![Space N = 1000](default_run/main.png)
