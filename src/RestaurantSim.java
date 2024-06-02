@@ -3,25 +3,31 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class RestaurantSim {
+    // Constants for starting capital and base target revenue
     private static final int STARTING_CAPITAL = 750;
     private static final int BASE_TARGET_REVENUE = 750;
+
+    // Scanner for user input and DecimalFormat for currency formatting
     private static final Scanner sc = new Scanner(System.in);
     private static final DecimalFormat currencyFormat = new DecimalFormat("$#,##0.00");
 
     public static void main(String[] args) {
-        int currentMonth = 1;
-        int capital = STARTING_CAPITAL;
-        double targetRevenue = BASE_TARGET_REVENUE;
-        int employeeCount = 0;
+        int currentMonth = 1; // Starting month
+        int capital = STARTING_CAPITAL; // Initial capital
+        double targetRevenue = BASE_TARGET_REVENUE; // Initial target revenue
+        int employeeCount = 0; // Initial employee count
 
+        // Lists to store chefs and waitresses
         ArrayList<Chef> chefs = new ArrayList<>();
         ArrayList<Waitress> waitresses = new ArrayList<>();
-        Manager manager = null;
+        Manager manager = null; // Manager initial variable
 
+        // Initializing restaurant status attributes
         Hygiene hygiene = new Hygiene();
         ToolsCondition toolsCondition = new ToolsCondition();
         StockCondition stockCondition = new StockCondition();
 
+        // Main simulation loop
         while (capital > 0) {
             System.out.println("\n** Month " + currentMonth + " **");
             System.out.println("Capital: " + currencyFormat.format(capital));
@@ -38,41 +44,39 @@ public class RestaurantSim {
             int choice = sc.nextInt();
 
             switch (choice) {
-                case 1:
+                case 1: // Hire Employee
                     System.out.println("1. Hire Chef $250\n2. Hire Waitress $150\n3. Hire Manager $2000");
                     System.out.println("\nPlease input your action:");
                     int hiring = sc.nextInt();
 
                     switch (hiring) {
-                        case 1:
+                        case 1: // Hire Chef
                             if (capital > 250) {
                                 chefs.add(Utility.hireChef());
                                 employeeCount++;
                                 capital -= 250;
-                            }
-                            else {
-                                System.out.println("You dont have enough money to hire");
-                            }
-                            break;
-
-                        case 2:
-                            if (capital > 150){
-                            waitresses.add(Utility.hireWaitress());
-                            employeeCount++;
-                            capital -= 150;
-                            }
-                            else {
-                                System.out.println("You dont have enough money to hire");
+                            } else {
+                                System.out.println("You don't have enough money to hire");
                             }
                             break;
 
-                        case 3:
-                            if (capital > 2000){
-                            manager = Utility.hireManager();
-                            employeeCount++;
-                            capital -= 2000;}
-                            else {
-                                System.out.println("You dont have enough money to hire");
+                        case 2: // Hire Waitress
+                            if (capital > 150) {
+                                waitresses.add(Utility.hireWaitress());
+                                employeeCount++;
+                                capital -= 150;
+                            } else {
+                                System.out.println("You don't have enough money to hire");
+                            }
+                            break;
+
+                        case 3: // Hire Manager
+                            if (capital > 2000) {
+                                manager = Utility.hireManager();
+                                employeeCount++;
+                                capital -= 2000;
+                            } else {
+                                System.out.println("You don't have enough money to hire");
                             }
                             break;
 
@@ -81,7 +85,7 @@ public class RestaurantSim {
                     }
                     break;
 
-                case 2:
+                case 2: // Fire Employee
                     System.out.println("1. Fire a Chef \n2. Fire a Waitress \n3. Go Back");
                     int fireChoice = sc.nextInt();
                     if (fireChoice == 1 && !chefs.isEmpty()) {
@@ -97,27 +101,27 @@ public class RestaurantSim {
                     }
                     break;
 
-                case 3:
+                case 3: // Manage Staff
                     Utility.manageStaff(chefs, waitresses, manager);
                     break;
 
-                case 4:
+                case 4: // View Upgrades
                     capital = Utility.upgradeEmployee(chefs, waitresses, manager, sc, capital);
                     break;
 
-                case 5:
+                case 5: // View Restaurant Status
                     Utility.viewRestaurantStatus(hygiene, toolsCondition, stockCondition);
                     break;
 
-                case 6:
+                case 6: // Restaurant Maintenance
                     Utility.maintainRestaurant(hygiene, toolsCondition, stockCondition);
                     capital -= 500;
                     break;
 
-                case 7:
+                case 7: // End Month
                     int revenue = getRevenue.calculateRevenue(chefs, waitresses, manager, hygiene, toolsCondition, stockCondition);
-                    revenue += Utility.triggerRandomEvent();
-                    capital += revenue;
+                    revenue += Utility.triggerRandomEvent(); // Trigger random event that affects revenue
+                    capital += revenue; // Add revenue to capital
                     if (capital < 0) {
                         System.out.println("** Game Over!**");
                         System.out.println("You ran out of funds after " + (currentMonth - 1) + " months.");
@@ -127,9 +131,9 @@ public class RestaurantSim {
                         System.out.println("You did not meet the target revenue of " + currencyFormat.format(targetRevenue) + " for month " + currentMonth + ".");
                         return;
                     }
-                    currentMonth++;
-                    Utility.reduceRestaurantAttributes(hygiene, toolsCondition, stockCondition);
-                    targetRevenue = getRevenue.getTargetRevenue(targetRevenue);
+                    currentMonth++; // Move to the next month
+                    Utility.reduceRestaurantAttributes(hygiene, toolsCondition, stockCondition); // Reduce attributes over time
+                    targetRevenue = getRevenue.getTargetRevenue(targetRevenue); // Update target revenue for the next month
                     break;
 
                 default:

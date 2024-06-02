@@ -28,17 +28,18 @@ public class Utility {
         return newWaitress; // Return the newly hired Waitress
     }
 
-    public static Manager hireManager(){
+    // Method to hire a Manager
+    public static Manager hireManager() {
         System.out.println("Enter the name of the Manager: ");
         String name = sc.next();
-        int exp = random.nextInt(10)+1;
+        int exp = random.nextInt(10) + 1; // Generate a random experience level between 1 and 10
         Manager newManager = new Manager(name, exp);
         System.out.println("Manager " + name + " with experience: " + exp);
-        return newManager;
+        return newManager; // Return the newly hired Manager
     }
 
     // Method to display and manage the current staff
-    public static void manageStaff(ArrayList<Chef> chefs, ArrayList<Waitress> waitresses,Manager manager) {
+    public static void manageStaff(ArrayList<Chef> chefs, ArrayList<Waitress> waitresses, Manager manager) {
         if (!chefs.isEmpty()) {
             System.out.println("Chefs:");
             for (Chef chef : chefs) {
@@ -56,6 +57,7 @@ public class Utility {
         } else {
             System.out.println("No Waitresses hired yet.");
         }
+
         if (manager != null) {
             System.out.println("Manager:");
             System.out.println("  - " + manager);
@@ -90,8 +92,7 @@ public class Utility {
         }
         int choice = sc.nextInt();
         if (choice == 0) {
-            System.out.println("Fire action canceled.");
-            return; // Exit the method if the user chooses to cancel
+            System.out.println("Fire action canceled."); // Exit the method if the user chooses to cancel
         } else if (choice > 0 && choice <= waitresses.size()) {
             System.out.println("Fired " + waitresses.get(choice - 1));
             waitresses.remove(choice - 1); // Remove the selected Waitress from the list
@@ -150,9 +151,9 @@ public class Utility {
 
             case 3:
                 if (manager != null && capital >= 500) {
+                    manager.increaseExp(); // Upgrade the Manager's experience
+                    System.out.println("Upgraded " + manager.getName() + " to experience " + manager.getExperience());
                     capital -= 500;
-                    manager.increaseExp(); // Upgrade the selected Waitress's ability
-                    System.out.println("Upgraded " + manager.getName() + " to ability " + manager.getExperience());
                 } else {
                     System.out.println("No manager available to upgrade or not enough capital.");
                 }
@@ -161,14 +162,14 @@ public class Utility {
             default:
                 System.out.println("Invalid option.");
         }
-        return capital;
+        return capital; // Return the updated capital
     }
 
     // Method to trigger a random event
     public static int triggerRandomEvent() {
         int chance = random.nextInt(100); // Generate a random number between 0 and 99
-        if (chance < 60) { // 30% chance for a random event
-            int eventIndex = random.nextInt(8); // Randomly select an event
+        if (chance < 50) { // 50% chance for a random event
+            int eventIndex = random.nextInt(8); // Randomly select an event from 8 possibilities
             switch (eventIndex) {
                 case 0:
                     System.out.println("A renowned food critic visited your restaurant and gave a rave review! Expect a surge in customers.");
@@ -200,34 +201,39 @@ public class Utility {
         }
         return 0; // No event occurs
     }
+
+    // Method to view the current status of the restaurant
     public static void viewRestaurantStatus(Hygiene hygiene, ToolsCondition toolsCondition, StockCondition stockCondition) {
         System.out.println("Restaurant Status:");
-        hygiene.view();
-        toolsCondition.view();
-        stockCondition.view();
-    }
-    public static void reduceRestaurantAttributes(Hygiene hygiene, ToolsCondition toolsCondition, StockCondition stockCondition) {
-        hygiene.reduce();
-        toolsCondition.reduce();
-        stockCondition.reduce();
+        hygiene.view(); // Display the hygiene status
+        toolsCondition.view(); // Display the tools condition status
+        stockCondition.view(); // Display the stock condition status
     }
 
-    public static void maintainRestaurant(Hygiene hygiene, ToolsCondition toolsCondition, StockCondition stockCondition){
-        System.out.println("Please choose attributes you want to update.");
+    // Method to reduce the restaurant's attributes over time
+    public static void reduceRestaurantAttributes(Hygiene hygiene, ToolsCondition toolsCondition, StockCondition stockCondition) {
+        hygiene.reduce(); // Reduce the hygiene value
+        toolsCondition.reduce(); // Reduce the tools condition value
+        stockCondition.reduce(); // Reduce the stock condition value
+    }
+
+    // Method to maintain or improve the restaurant's attributes
+    public static void maintainRestaurant(Hygiene hygiene, ToolsCondition toolsCondition, StockCondition stockCondition) {
+        System.out.println("Please choose the attribute you want to update:");
         System.out.println("1. Clean Restaurant");
         System.out.println("2. Maintain tools");
         System.out.println("3. Update Stock");
         int choice = sc.nextInt();
 
-        switch (choice){
+        switch (choice) {
             case 1:
-                hygiene.increase();
+                hygiene.increase(); // Increase the hygiene value
                 break;
             case 2:
-                toolsCondition.increase();
+                toolsCondition.increase(); // Increase the tools condition value
                 break;
             case 3:
-                stockCondition.increase();
+                stockCondition.increase(); // Increase the stock condition value
                 break;
             default:
                 System.out.println("Invalid option.");
