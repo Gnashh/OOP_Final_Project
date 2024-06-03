@@ -29,7 +29,7 @@ public class getRevenue {
         if (stockCondition.isBelowThreshold()) penalty += 0.1;
 
         // Calculate total revenue after considering bonuses and penalties
-        double totalRevenue = (baseRevenue + chefBonus + waitressBonus)*manager.getBonusMultiplier();
+        double totalRevenue = (baseRevenue + chefBonus + waitressBonus)*(manager != null ? manager.getBonusMultiplier():1);
         totalRevenue *= (1 - penalty);
 
         // Display total revenue for the month
