@@ -14,7 +14,7 @@ public class StockCondition implements RestaurantStatus {
 
     @Override
     public void reduce() {
-        // Reduces tools condition value by a random amount between 1 and 25
+        // Reduces tools condition value by a random amount between 1 and 20
         value -= random.nextInt(20) + 1;
         if (value < 0) value = 0; // Ensure value does not go below 0
     }
